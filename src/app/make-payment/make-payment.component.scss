@@ -1,0 +1,86 @@
+.paymentContainer {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  border: 1px solid darken($color: white, $amount: 10%);
+
+  .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid darken($color: white, $amount: 10%);
+
+    .title {
+      text-transform: uppercase;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    input {
+      border: none;
+      outline: none;
+      width: 100%;
+    }
+
+    .form-control {
+      border: 1px solid darken($color: white, $amount: 15%);
+      overflow: hidden;
+      display: flex;
+      padding: 0 10px;
+      box-sizing: border-box;
+      height: 40px;
+      border-radius: 4px;
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+  }
+
+  form {
+    button {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spinner:before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #2f03a8;
+    animation: spinner 0.5s linear infinite;
+  }
+
+  .text-danger {
+    color: red;
+  }
+}
