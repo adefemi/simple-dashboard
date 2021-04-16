@@ -1,0 +1,96 @@
+<div class="homeContent">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Departments</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Create</li>
+    </ol>
+  </nav>
+  <br />
+  <form #departmentForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="createGrid">
+      <div class="customContainer">
+        <div class="heading">Department info</div>
+
+        <div class="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            name="departmentInfo.name"
+            [(ngModel)]="departmentData.departmentInfo.name"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>API key</label>
+          <input
+            type="text"
+            name="departmentInfo.apiKey"
+            [(ngModel)]="departmentData.departmentInfo.apiKey"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="addButton">
+          <button type="button" class="btn btn-success">Add new Field</button>
+        </div>
+      </div>
+      <div class="customContainer">
+        <div class="heading">Department Contact Person</div>
+
+        <div class="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            name="departmentContactPerson.name"
+            [(ngModel)]="departmentData.departmentContactPerson.name"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="departmentContactPerson.email"
+            [(ngModel)]="departmentData.departmentContactPerson.email"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Telephone</label>
+          <input
+            type="number"
+            name="departmentContactPerson.telephone"
+            [(ngModel)]="departmentData.departmentContactPerson.telephone"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="addButton">
+          <button type="button" class="btn btn-success">Add new Field</button>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div class="submitContainer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="router.navigateByUrl('/')"
+      >
+        Cancel
+      </button>
+      <button
+        [disabled]="!departmentForm.valid || loading"
+        type="submit"
+        class="btn btn-success"
+        [class.spinner]="loading"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

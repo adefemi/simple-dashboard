@@ -1,6 +1,5 @@
-.paymentContainer {
-  max-width: 500px;
-  margin: 50px auto;
+.customContainer {
+  width: 100%;
   padding: 20px;
   box-sizing: border-box;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -45,12 +44,6 @@
     }
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px;
-  }
-
   form {
     button {
       width: 100%;
@@ -83,4 +76,23 @@
   .text-danger {
     color: red;
   }
+}
+
+.createGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-gap: 3em;
+}
+
+.submitContainer {
+  width: 100%;
+  max-width: 450px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1em;
+}
+
+.addButton {
+  display: flex;
+  justify-content: flex-end;
 }

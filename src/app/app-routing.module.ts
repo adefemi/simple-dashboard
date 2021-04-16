@@ -1,9 +1,9 @@
-import { MakePaymentComponent } from './make-payment/make-payment.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'make-payment', component: MakePaymentComponent },
+  { path: 'add-department', component: AddDepartmentComponent },
 ];
 
 @NgModule({

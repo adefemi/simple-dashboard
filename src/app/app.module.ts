@@ -4,16 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MakePaymentComponent } from './make-payment/make-payment.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { paymentReducer } from './state-management/payment.reducer';
+import { departmentReducer } from './state-management/management.reducer';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, MakePaymentComponent],
+  declarations: [AppComponent, AddDepartmentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,7 +23,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     FormsModule,
     StoreModule.forRoot({
-      payments: paymentReducer,
+      data: departmentReducer,
     }),
     ToastrModule.forRoot(),
   ],

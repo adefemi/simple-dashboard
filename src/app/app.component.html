@@ -1,36 +1,93 @@
 <div>
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-text">
+      {{ title }}
+    </span>
+  </nav>
   <div class="homeContent" *ngIf="router.url === '/'">
-    <div class="heading">
-      <div class="title">{{ title }}</div>
-      <button routerLink="/make-payment" mat-raised-button color="accent">
-        Make new payment
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+      </ol>
+    </nav>
+
+    <div class="controlHeader">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search"
+        #mySearch
+        (input)="onSearch(mySearch.value)"
+      />
+      <button type="button" class="btn btn-primary" (click)="handleCreate()">
+        Create New Department
       </button>
     </div>
-    <table [border]="0" cellspacing="0" cellpadding="0">
-      <thead>
-        <th>SN</th>
-        <th>Credit Card Number</th>
-        <th>Card Holder</th>
-        <th>Expiration Date</th>
-        <th>Security Code (CVV)</th>
-        <th>Amount</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let payment of payments | async; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ payment.creditCardNumber }}</td>
-          <td>{{ payment.cardHolder }}</td>
-          <td>{{ payment.expirationDate | date: "mediumDate" }}</td>
-          <td>{{ payment.securityCodeCVV }}</td>
-          <td>{{ payment.amount }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div
-      class="noRecord"
-      *ngIf="!(payments | async) || (payments | async)?.length < 1"
-    >
+    <div class="deptGrid">
+      <div
+        class="deptCard"
+        *ngFor="let department of departments; let i = index"
+      >
+        {{ department.departmentInfo.name }}
+        <div class="icon">
+          <i class="fa fa-building-o" aria-hidden="true"></i>
+        </div>
+        <div class="menu">
+          <div class="item">Open</div>
+          <div class="item">
+            <div class="dropdown">
+              <i
+                class="fa fa-chevron-down"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropItem" (click)="onEdit(i, department)">Edit</div>
+                <div class="dropItem" (click)="onDelete(i)">Delete</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="noRecord" *ngIf="!departments || departments?.length < 1">
       No Record found!
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Delete</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            data-dismiss="modal"
+            class="btn btn-primary"
+            (click)="completeDelete()"
+          >
+            Delete
+          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <router-outlet></router-outlet>

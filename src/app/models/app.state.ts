@@ -1,5 +1,8 @@
-import { PaymentDTO } from './payment.dto';
+import { DepartmentObject, ActiveDepartmentObject } from './department.object';
 
 export interface AppState {
-  readonly payments: PaymentDTO[];
+  readonly data: {
+    departments: DepartmentObject[];
+    activeDepartment: ActiveDepartmentObject;
+  };
 }

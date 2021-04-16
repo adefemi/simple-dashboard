@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReactiveFormConfig } from '@rxweb/reactive-form-validators';
-import { PaymentDTO } from './models/payment.dto';
+import { DepartmentObject } from './models/department.object';
 import { Store } from '@ngrx/store';
 import { AppState } from './models/app.state';
+import { DepartmentService } from './services/department.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -12,23 +13,61 @@ import { AppState } from './models/app.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'Payment Records';
-  payments: Observable<PaymentDTO[]>;
+  title = 'Departments';
+  departments: DepartmentObject[];
+  allData: DepartmentObject[];
+  activeIndex: number;
 
-  constructor(public router: Router, private store: Store<AppState>) {
-    ReactiveFormConfig.set({
-      validationMessage: {
-        required: 'This field is required.',
-        minLength: 'Enter minimum length of {{1}} characters.',
-        maxLength: 'Enter maximum length of {{1}} characters.',
-        minDate: 'Minimum date cannot be less than today',
-        digit: 'Expected only digits',
-        minNumber: 'Minimum number must be either {{1}} or greater',
-      },
+  constructor(
+    public router: Router,
+    private store: Store<AppState>,
+    private toastService: ToastrService,
+    private departmentService: DepartmentService
+  ) {}
+
+  ngOnInit(): void {
+    this.store.select('data').subscribe((a) => {
+      this.departments = a.departments;
+      this.allData = a.departments;
     });
   }
 
-  ngOnInit(): void {
-    this.payments = this.store.select('payments');
+  onSearch = (value: string) => {
+    this.departments = this.allData.filter(
+      (e: DepartmentObject) =>
+        e.departmentInfo.name.includes(value) ||
+        e.departmentInfo.apiKey.includes(value) ||
+        e.departmentContactPerson.name.includes(value) ||
+        e.departmentContactPerson.email.includes(value) ||
+        e.departmentContactPerson.telephone.includes(value)
+    );
+  };
+
+  onEdit(activeIndex: number, dept: DepartmentObject): void {
+    this.departmentService.postActiveDepartment({
+      activeIndex,
+      dept,
+    });
+    this.router.navigateByUrl('/add-department');
+  }
+
+  onDelete(activeIndex: number): void {
+    this.activeIndex = activeIndex;
+    let quickNode = document.createElement('div');
+    quickNode.setAttribute('data-toggle', 'modal');
+    quickNode.setAttribute('data-target', '#exampleModal');
+    document.body.appendChild(quickNode);
+    quickNode.click();
+    document.body.removeChild(quickNode);
+  }
+
+  completeDelete(): void {
+    this.departmentService.deleteDepartment(this.activeIndex);
+    this.toastService.success('Department Delete successfully');
+  }
+
+  handleCreate(): void {
+    this.departmentService.postActiveDepartment(null);
+    this.router.navigateByUrl('/add-department');
   }
 }
